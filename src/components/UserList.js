@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext,useState } from 'react'
 import { userContext } from './UserProvider'
 import { useHistory } from 'react-router-dom';
 import * as React from 'react';
@@ -15,17 +15,28 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Avatar from '@mui/material/Avatar';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
+import { useEffect } from 'react';
+import {API} from './UserProvider'
 const UserList = () => {
-  const [userList,setUserList] = useContext(userContext);
+ 
+ const [userList,setUserList]=useState([])
+
  const history=useHistory();
 
-  const handleSubmit = (e) => {
-    const copyuserlist=[...userList];
-    copyuserlist.splice(e.target.value,1);
-    setUserList(copyuserlist);
- }
 
+const getUsers=()=>{
+  fetch(API).then((data)=>data.json()).then((users)=>setUserList(users))
+}
+
+useEffect(()=>getUsers(),[]);
+
+const deleteUser = (id) => {
+  fetch(`${API}/${id}`, {
+    method: "DELETE",
+  })
+  .then(() => getUsers());
+   
+ }
  const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#2191d4',
@@ -45,7 +56,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
- 
+
+
   return (
    <div className='UserList'>
         
@@ -58,43 +70,38 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     <TableRow>
     <StyledTableCell align="center">#</StyledTableCell>
       <StyledTableCell align="center">Name</StyledTableCell>
-      <StyledTableCell align="center">Profile</StyledTableCell>
+      <StyledTableCell align="left">Profile View</StyledTableCell>
        <StyledTableCell align="center">Job Description</StyledTableCell>
       <StyledTableCell align="center">Email</StyledTableCell>
-      {/* <StyledTableCell align="center">Mobile</StyledTableCell>
-      <StyledTableCell align="center">Address</StyledTableCell> */}
       <StyledTableCell align="center">Action</StyledTableCell>
     </TableRow>
   </TableHead>
   <TableBody>
-  {userList.map(({name,email,mobile,designation,img,address}, index)=>
-  // => name )}   
-    
+  {userList.map(({id,name,email,mobile,designation,img,address}, index)=>
+   
       <StyledTableRow key={index}>
-        <StyledTableCell component="th" scope="row" align="center">
-          {index+1}
+        <StyledTableCell align="center">
+          {id}
         </StyledTableCell>
-        <StyledTableCell component="th" scope="row" align="center">
+        <StyledTableCell align="center">
           {name}
         </StyledTableCell>
-         <StyledTableCell align="center"> 
-        <Avatar alt="Profile Picture" src={img} onClick={()=>{history.push(`/profile/${index}`)}}/></StyledTableCell> 
+         <StyledTableCell align="center"  > 
+        <Avatar alt="Profile Picture" src={img} onClick={()=>{history.push(`/profile/${id}`)}}/></StyledTableCell> 
         <StyledTableCell align="center">{designation}</StyledTableCell>
         <StyledTableCell align="center">{email}</StyledTableCell>
-         {/* <StyledTableCell align="center">{mobile}</StyledTableCell>
-        <StyledTableCell align="center">{address}</StyledTableCell>  */}
-        <StyledTableCell align="center">
+         <StyledTableCell align="center">
         <IconButton aria-label="profile-view" color="success"
          >
-           <AccountCircleIcon onClick={()=>{history.push(`/edit-profile/${index}`)}} />
+           <AccountCircleIcon onClick={()=>{history.push(`/edit-profile/${id}`)}} />
           </IconButton>
          <IconButton aria-label="delete" color="error"
          >
-            <DeleteIcon onClick={handleSubmit} />
+            <DeleteIcon onClick={()=>{deleteUser(id)}} />
           </IconButton>
           <IconButton aria-label="edit" color="secondary" 
            >
-              <EditIcon  onClick={()=>{history.push(`/edit-user/${index}`)}}/>
+              <EditIcon  onClick={()=>{history.push(`/edit-user/${id}`)}}/>
 
           </IconButton>
         </StyledTableCell>

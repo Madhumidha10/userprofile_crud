@@ -1,11 +1,13 @@
 import React, { useState,createContext } from 'react'
 
 export const userContext = createContext();
+export const API='https://6209ef5b92946600171c55cd.mockapi.io/users';
+
 
 export const UserProvider = (props) => {
   const [userList, setUserList] = useState([
     {
-        
+        id:"1001",
         name: "Madhumidha.A",
         email: "madhu4win@gmail.com",
         mobile: "9042693794",
@@ -15,7 +17,7 @@ export const UserProvider = (props) => {
         about:"Enthusiastic engineering graduate with basic knowledge in coding and design. Proficient in C++, HTML 5, JavaScript, and Python. Ability to learn new softwares and technologies quickly. Capability to work in teams by providing valuable support."
     },
     {
-      
+      id:"1002",
       name: "Boopalan.M",
       email: "balan@gmail.com",
       mobile: "88526215889",
@@ -24,7 +26,8 @@ export const UserProvider = (props) => {
       designation: "Full stack Developer",
       about:"B.Tech computer science graduate with a 60% score in academics.  Have knowledge in C#, HTML, CSS, JavaScript, ASP.Net, SQL server, jquery, BootStrap, Web API, and Angular. Ability to design and maintain ASP.net application phases."
   },
-  {name: "Praneeta.B",
+  {   id:"1003",
+      name: "Praneeta.B",
       email: "praneeta@gmail.com",
       mobile: "8852454458",
       img: "https://writestylesonline.com/wp-content/uploads/2016/08/Follow-These-Steps-for-a-Flawless-Professional-Profile-Picture.jpg",
@@ -33,7 +36,8 @@ export const UserProvider = (props) => {
       about:"MCA (Master in Computer Application) with distinction and seven years of experience as a data scientist. Proficiency in HTML, CSS, Python, C++, C# and JAVA. Beginner in MATLAB. Experienced in manipulating visual hierarchy and automation in prediction algorithms for customer trends."
   },
   {
-    name: "Mugundan.B",
+      id:"1004",
+      name: "Mugundan.B",
       email: "mugund@gmail.com",
       mobile: "8959554256",
       img: "https://www.trickscity.com/wp-content/uploads/2016/11/K0cAXP3.jpg",

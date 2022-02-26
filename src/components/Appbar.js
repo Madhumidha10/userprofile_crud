@@ -10,6 +10,7 @@ import UserProfile from './UserProfile'
 import EditProfile from './EditProfile';
 import Paper from '@mui/material/Paper';
 import Home from './Home';
+import About from './About';
 import {
     Switch,
     Route
@@ -40,8 +41,9 @@ export default function Appbar(){
         <AppBar position='static'>
           <Toolbar>
             <Button color="inherit" onClick={()=>{history.push("/")}} >Home</Button>
+            <Button color="inherit" onClick={()=>{history.push("/about")}} >About</Button>
             <Button color="inherit" onClick={()=>{history.push("/users")}} >Users List</Button>
-            <Button color="inherit" onClick={()=>{history.push("/add-user")}} >Add User</Button>         
+            <Button color="inherit" onClick={()=>{history.push("/add-user")}} >Add User</Button>  
             <Button color="inherit" style={{ marginLeft: "auto" }}
             startIcon={mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
             onClick={() => setMode(mode === "light" ? "dark" : "light")}>
@@ -52,6 +54,9 @@ export default function Appbar(){
       <Route exact path="/">
         <Home />
       </Route>
+      <Route exact path="/about">
+        <About />
+      </Route>
       <Route path="/add-user">
       <AddUser />
       </Route>
@@ -60,7 +65,7 @@ export default function Appbar(){
       </Route>
       <Route path="/users">
         <UserList /> 
-          
+         
       </Route>
       <Route path="/profile/:id">
         <UserProfile /> 
@@ -70,6 +75,7 @@ export default function Appbar(){
         <EditProfile /> 
           
       </Route>
+     
       <Route path="**">
         <PageNotFound /> 
           
